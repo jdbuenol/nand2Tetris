@@ -1,0 +1,50 @@
+/**
+ * 8-way 16-bit multiplexor:
+ * if sel[0] == 1 and sel[1] == 1 and sel[2] == 1: for x in range(16): out[x] = h[x]
+ * if sel[0] == 0 and sel[1] == 1 and sel[2] == 1: for x in range(16): out[x] = g[x]
+ * if sel[0] == 1 and sel[1] == 0 and sel[2] == 1: for x in range(16): out[x] = f[x]
+ * if sel[0] == 0 and sel[1] == 0 and sel[2] == 1: for x in range(16): out[x] = e[x]
+ * if sel[0] == 1 and sel[1] == 1 and sel[2] == 0: for x in range(16): out[x] = d[x]
+ * if sel[0] == 0 and sel[1] == 1 and sel[2] == 0: for x in range(16): out[x] = c[x]
+ * if sel[0] == 1 and sel[1] == 0 and sel[2] == 0: for x in range(16): out[x] = b[x]
+ * if sel[0] == 0 and sel[1] == 0 and sel[2] == 0: for x in range(16): out[x] = a[x]
+ */
+
+CHIP Mux8Way16 {
+    IN a[16], b[16], c[16], d[16], e[16], f[16], g[16], h[16], sel[3];
+    OUT out[16];
+
+    PARTS:
+    Not(in=sel[0], out= not0);
+    Not(in=sel[1], out= not1);
+    Not(in=sel[2], out= not2);
+    And(a=sel[0], b=sel[1], out=oH);
+    And(a=oH, b=sel[2], out=outH);
+    And(a=not0, b=sel[1], out=oG);
+    And(a=oG, b=sel[2], out=outG);
+    And(a=sel[0], b=not1, out=oF);
+    And(a=oF, b=sel[2], out=outF);
+    And(a=not0, b=not1, out=oE);
+    And(a=oE, b=sel[2], out=outE);
+    And(a=oH, b=not2, out=outD);
+    And(a=oG, b=not2, out=outC);
+    And(a=oF, b=not2, out=outB);
+    And(a=oE, b=not2, out=outA);
+    Not16(in=a, out=notA);
+    And16(a=a, b=notA, out=low16);
+    Mux16(a=low16, b=a, sel=outA, out=muxA);
+    Mux16(a=low16, b=b, sel=outB, out=muxB);
+    Mux16(a=low16, b=c, sel=outC, out=muxC);
+    Mux16(a=low16, b=d, sel=outD, out=muxD);
+    Mux16(a=low16, b=e, sel=outE, out=muxE);
+    Mux16(a=low16, b=f, sel=outF, out=muxF);
+    Mux16(a=low16, b=g, sel=outG, out=muxG);
+    Mux16(a=low16, b=h, sel=outH, out=muxH);
+    Or16(a=muxA, b=muxB, out=out1);
+    Or16(a=muxC, b=muxD, out=out2);
+    Or16(a=muxE, b=muxF, out=out3);
+    Or16(a=muxG, b=muxH, out=out4);
+    Or16(a=out1, b=out2, out=out5);
+    Or16(a=out3, b=outS4, out=out6);
+    Or16(a=out5, b=out6, out=out);
+}

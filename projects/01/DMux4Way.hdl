@@ -1,0 +1,17 @@
+/**
+ * 4-way demultiplexor:
+ * if sel[0] == 1 and sel[1] == 1: a,b,c,d = 0,0,0,in
+ * if sel[0] == 0 and sel[1] == 1: a,b,c,d = 0,0,in,0
+ * if sel[0] == 1 and sel[1] == 0: a,b,c,d = 0,in,0,0
+ * if sel[0] == 0 and sel[1] == 0: a,b,c,d = in,0,0,0
+ */
+
+CHIP DMux4Way {
+    IN in, sel[2];
+    OUT a, b, c, d;
+
+    PARTS:
+    DMux(in=in, sel=sel[0], a=d0, b=d1);
+    DMux(in=d0, sel=sel[1], a=a, b=c);
+    DMux(in=d1, sel=sel[1], a=b, b=d);
+}

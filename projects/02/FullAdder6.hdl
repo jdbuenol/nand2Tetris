@@ -1,0 +1,53 @@
+/*
+ * Computes the sum of two 6-bits.
+ */
+
+CHIP FullAdder6 {
+    IN a[6], b[6], cin;    // 6-bit inputs
+    OUT sum[6], 
+        carry;
+
+    PARTS:
+    Xor(a=a[0], b=b[0], out=s0);
+    Xor(a=s0, b=cin, out=sum[0]);
+    And(a=a[0], b=b[0], out=c01);
+    And(a=a[0], b=cin, out=c02);
+    And(a=b[0], b=cin, out=c03);
+    Or(a=c01, b=c02, out=c04);
+    Or(a=c03, b=c04, out=carry0);
+    Xor(a=a[1], b=b[1], out=s1);
+    Xor(a=s1, b=carry0, out=sum[1]);
+    And(a=a[1], b=b[1], out=c11);
+    And(a=a[1], b=carry0, out=c12);
+    And(b=b[1], b=carry0, out=c13);
+    Or(a=c11, b=c12, out=c14);
+    Or(a=c13, b=c14, out=carry1);
+    Xor(a=a[2], b=b[2], out=s2);
+    Xor(a=s2, b=carry1, out=sum[2]);
+    And(a=a[2], b=b[2], out=c21);
+    And(a=a[2], b=carry1, out=c22);
+    And(b=b[2], b=carry1, out=c23);
+    Or(a=c21, b=c22, out=c24);
+    Or(a=c23, b=c24, out=carry2);
+    Xor(a=a[3], b=b[3], out=s3);
+    Xor(a=s3, b=carry2, out=sum[3]);
+    And(a=a[3], b=b[3], out=c31);
+    And(a=a[3], b=carry2, out=c32);
+    And(b=b[3], b=carry2, out=c33);
+    Or(a=c31, b=c32, out=c34);
+    Or(a=c33, b=c34, out=carry3);
+    Xor(a=a[4], b=b[4], out=s4);
+    Xor(a=s4, b=carry3, out=sum[4]);
+    And(a=a[4], b=b[4], out=c41);
+    And(a=a[4], b=carry3, out=c42);
+    And(b=b[4], b=carry3, out=c43);
+    Or(a=c41, b=c42, out=c44);
+    Or(a=c43, b=c44, out=carry4);
+    Xor(a=a[5], b=b[5], out=s5);
+    Xor(a=s5, b=carry4, out=sum[5]);
+    And(a=a[5], b=b[5], out=c51);
+    And(a=a[5], b=carry4, out=c52);
+    And(b=b[5], b=carry4, out=c53);
+    Or(a=c51, b=c52, out=c54);
+    Or(a=c53, b=c54, out=carry);
+}

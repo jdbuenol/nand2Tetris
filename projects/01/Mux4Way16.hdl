@@ -1,0 +1,29 @@
+/**
+ * 4-way 16-bit multiplexor:
+ * if sel[0] == 1 and sel[1] == 1: for x in range(16): out[x] = d[x]
+ * else if sel[1] == 1: for x in range(16): out[x] = c[x]
+ * else if sel[0] == 1: for x in range(16) : out[x] = b[x]
+ * else: for x in range(16): out[x] = a[x] 
+ */
+
+CHIP Mux4Way16 {
+    IN a[16], b[16], c[16], d[16], sel[2];
+    OUT out[16];
+
+    PARTS:
+    Not(in=sel[0], out= not0);
+    Not(in=sel[1], out= not1);
+    And(a=sel[0], b=sel[1], out=outD);
+    And(a=not0, b=sel[1], out=outC);
+    And(a=sel[0], b=not1, out=outB);
+    And(a=not0, b=not1, out=outA);
+    Not16(in=a, out=notA);
+    And16(a=a, b=notA, out=low16);
+    Mux16(a=low16, b=a, sel=outA, out=muxA);
+    Mux16(a=low16, b=b, sel=outB, out=muxB);
+    Mux16(a=low16, b=c, sel=outC, out=muxC);
+    Mux16(a=low16, b=d, sel=outD, out=muxD);
+    Or16(a=muxA, b=muxB, out=out1);
+    Or16(a=muxC, b=muxD, out=out2);
+    Or16(a=out1, b=out2, out=out);
+}
