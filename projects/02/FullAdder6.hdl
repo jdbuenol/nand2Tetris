@@ -2,7 +2,7 @@
  * Computes the sum of two 6-bits.
  */
 
-CHIP FullAdder6 {
+CHIP FullAdder6 {S
     IN a[6], b[6], cin;    // 6-bit inputs
     OUT sum[6], 
         carry;

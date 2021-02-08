@@ -42,5 +42,54 @@ CHIP ALU {
         ng; // 1 if (out < 0),  0 otherwise
 
     PARTS:
-   // Put you code here:
+    Not16(in=x, out=notX);
+    And16(a=x, b=notX, out=zero16, out[0]=zeroConstant);
+    Mux16(a=x, b=zero16, sel=zx, out=posZX);
+    Not16(in=posZX, out=preNX);
+    Mux16(a=posZX, b=preNX, sel=nx, out=posNX);
+    Mux16(a=y, b=zero16, sel=zy, out=posZY);
+    Not16(in=posZY, out=preNY);
+    Mux16(a=posZY, b=preNY, sel=ny, out=posNY);
+    And16(a=posNX, b=posNY, out=fAnd);
+    Add16(a=posNX, b=posNY, out=fSuma);
+    Mux16(a=fAnd, b=fSuma, sel=f, out=posF);
+    Not16(in=posF, out=posNoF);
+    Mux16(a=posF, b=posNoF, sel=no, out=result, out[0]=result0, out[1]=result1, out[2]=result2,
+    out[3]=result3, out[4]=result4, out[5]=result5, out[6]=result6, out[7]=result7, out[8]=result8,
+    out[9]=result9, out[10]=result10, out[11]=result11, out[12]=result12, out[13]=result13,
+    out[14]=result14, out[15]=result15);
+    And16(a=result, b=result, out=out);
+    And(a=result15, b=result15, out=ng);
+    Xor(a=result0, b=zeroConstant, out=zr0);
+    Xor(a=result1, b=zeroConstant, out=zr1);
+    Xor(a=result2, b=zeroConstant, out=zr2);
+    Xor(a=result3, b=zeroConstant, out=zr3);
+    Xor(a=result4, b=zeroConstant, out=zr4);
+    Xor(a=result5, b=zeroConstant, out=zr5);
+    Xor(a=result6, b=zeroConstant, out=zr6);
+    Xor(a=result7, b=zeroConstant, out=zr7);
+    Xor(a=result8, b=zeroConstant, out=zr8);
+    Xor(a=result9, b=zeroConstant, out=zr9);
+    Xor(a=result10, b=zeroConstant, out=zr10);
+    Xor(a=result11, b=zeroConstant, out=zr11);
+    Xor(a=result12, b=zeroConstant, out=zr12);
+    Xor(a=result13, b=zeroConstant, out=zr13);
+    Xor(a=result14, b=zeroConstant, out=zr14);
+    Xor(a=result15, b=zeroConstant, out=zr15);
+    Or(a=zr0, b=zr1, out=zr16);
+    Or(a=zr2, b=zr3, out=zr17);
+    Or(a=zr4, b=zr5, out=zr18);
+    Or(a=zr6, b=zr7, out=zr19);
+    Or(a=zr8, b=zr9, out=zr20);
+    Or(a=zr10, b=zr11, out=zr21);
+    Or(a=zr12, b=zr13, out=zr22);
+    Or(a=zr14, b=zr15, out=zr23);
+    Or(a=zr16, b=zr17, out=zr24);
+    Or(a=zr18, b=zr19, out=zr25);
+    Or(a=zr20, b=zr21, out=zr26);
+    Or(a=zr22, b=zr23, out=zr27);
+    Or(a=zr24, b=zr25, out=zr28);
+    Or(a=zr26, b=zr27, out=zr29);
+    Or(a=zr28, b=zr29, out=zr30);
+    Not(in=zr30, out=zr);
 }
