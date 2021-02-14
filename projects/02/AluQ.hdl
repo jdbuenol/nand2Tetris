@@ -1,0 +1,28 @@
+// QUANTUM ARITHMETIC LOGIC UNIT
+
+CHIP aluQ{
+    IN x[32], y[32],
+    zx,
+    nx,
+    zy,
+    ny,
+    f,
+    no;
+
+    OUT out[32],
+    zr,
+    ng;
+
+    PARTS:
+    ALU(x=x[0..16], y=y[0..16], zx=zx, nx=nx, zy=zy, ny=ny, f=f, no=no, out=out[0..16], out[0..8]=out1, out[8..16]=out2, zr=zr0, ng=ng0);
+    ALU(x=x[16..32], y=y[16..32], zx=zx, nx=nx, zy=zy, ny=ny, f=f, no=no, out=out[16..32], out[0..8]=out3, out[8..16]=out4, out[31]=ngOut, zr=zr1, ng=ng1);
+    Or8Way(in=out1, out=out5);
+    Or8Way(in=out2, out=out6);
+    Or8Way(in=out3, out=out7);
+    Or8Way(in=out4, out=out8);
+    Or(a=out5, b=out6, out=out9);
+    Or(a=out7, b=out8, out=out10);
+    Or(a=out9, b=out10, out=out11);
+    Not(in=out11, out=zr);
+    And(a=ngOut, b=ngOut, out=ng);
+}
