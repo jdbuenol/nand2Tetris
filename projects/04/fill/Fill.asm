@@ -39,23 +39,18 @@
     @START
     0;JMP
 (FILL)
-    @32767
-    D = A
-    @16384
-    M = D
     @R1
     M = 0
     (LOOP2)
+        @24576
+        D = M
+        @START
+        D;JEQ
         @R1
         D = M
         @16384
-        D = A + D
-        @R2
-        M = D
-        @32767
-        D = A
-        @R2
-        M = D
+        A = A + D
+        M = - 1
         @R1
         M = M + 1
         D = M
