@@ -39,8 +39,6 @@ def jump(mnemonic):
         return "111"
 
 def comp(mnemonic):
-    if mnemonic[-1] == "\n":
-        mnemonic = mnemonic[:-1]
     if mnemonic == "0":
         return "0101010"
     if mnemonic == "1":

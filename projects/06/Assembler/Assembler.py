@@ -1,5 +1,6 @@
 import sys, code
 from parser import parser
+from symbol_table import symbol_table as sym
 
 if __name__ == '__main__':
     if len(sys.argv) > 2:
@@ -21,21 +22,36 @@ if __name__ == '__main__':
     file_name = path[slash_idx + 1:].split('.')[0]
     file_asm = open(path, 'r')
     lines = []
+    lines2 = []
     for line in file_asm:
         lines.append(line)
+        lines2.append(line)
     file_asm.close()
     file_hack = None
     if slash_idx == -1:
         file_hack = open(file_name + ".hack", 'w')
     else:
         file_hack = open(dir_path + file_name + ".hack", 'w')
+    current_address = 0
+    symbols = sym()
     current_parser = parser(lines)
+    while current_parser.has_more_commands():
+        if not current_parser.advance():
+            break
+        if current_parser.command_type() == "A" or current_parser.command_type() == "C":
+            current_address += 1
+        if current_parser.command_type() == "L":
+            symbols.add_entry(current_parser.symbol(), current_address)
+    current_parser = parser(lines2)
     while current_parser.has_more_commands():
         if not current_parser.advance():
             break
         if current_parser.command_type() == "A":
             symbol = current_parser.symbol()
-            file_hack.write(code.dec_to_bin(int(symbol)) + "\n")
+            if symbols.contains(symbol):
+                file_hack.write(code.dec_to_bin(int(symbols.get_address(symbol))) + "\n")
+            else:
+                file_hack.write(code.dec_to_bin(int(symbol)) + "\n")
         elif current_parser.command_type() == "C":
             comp = current_parser.comp()
             dest = current_parser.dest()
