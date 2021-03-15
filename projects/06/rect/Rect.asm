@@ -19,7 +19,7 @@
 (LOOP)
    @address
    A=M
-   M=-1
+   M=0
    @address
    D=M
    @32

@@ -43,6 +43,7 @@ if __name__ == '__main__':
         if current_parser.command_type() == "L":
             symbols.add_entry(current_parser.symbol(), current_address)
     current_parser = parser(lines2)
+    var_counter = 16
     while current_parser.has_more_commands():
         if not current_parser.advance():
             break
@@ -50,8 +51,12 @@ if __name__ == '__main__':
             symbol = current_parser.symbol()
             if symbols.contains(symbol):
                 file_hack.write(code.dec_to_bin(int(symbols.get_address(symbol))) + "\n")
-            else:
+            elif symbol.isdigit():
                 file_hack.write(code.dec_to_bin(int(symbol)) + "\n")
+            else:
+                symbols.add_entry(symbol, var_counter)
+                var_counter += 1
+                file_hack.write(code.dec_to_bin(int(symbols.get_address(symbol))) + "\n")
         elif current_parser.command_type() == "C":
             comp = current_parser.comp()
             dest = current_parser.dest()
