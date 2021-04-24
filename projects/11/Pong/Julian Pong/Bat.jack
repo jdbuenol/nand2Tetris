@@ -1,0 +1,67 @@
+class Bat{
+
+    field int x, y;
+    field int height, width;
+    field int dir;
+
+    constructor Bat new(int Ax, int Ay){
+        let x = Ax;
+        let y = Ay;
+        let height = 35;
+        let width = 3;
+        let dir = 2;
+        do show();
+        return this;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void show() {
+        do Screen.setColor(true);
+        do draw();
+        return;
+    }
+
+    method void draw() {
+        do Screen.drawRectangle(x, y, x + 2, y + 10);
+        return;
+    }
+
+    /** Sets the bat's direction (0=stop, 1=left, 2=right). */
+    method void setDirection(int Adirection) {
+        let dir = Adirection;
+        return;
+    }
+
+    method int getTop(){
+        return y;
+    }
+
+    method int getBottom(){
+        return y + height;
+    }
+
+    /** Moves the bat one step in the bat's direction. */
+    method void move() {
+	    if (dir = 1) {
+            let y = y - 1;
+            if (y < 0) { let y = 0; }
+            do Screen.setColor(false);
+            do Screen.drawRectangle(x, y + 1, x + width, (y + height) + 1);
+            do Screen.setColor(true);
+            do Screen.drawRectangle(x, y, x + width, y + height);
+        }
+        if (dir = 2) {
+            let y = y + 1;
+            if ((y + height) > 255) { let y = 255 - height; }
+            do Screen.setColor(false);
+            do Screen.drawRectangle(x, y - 1, x + width, (y + height) - 1);
+            do Screen.setColor(true);
+            do Screen.drawRectangle(x, y, x + width, y + height);
+        }
+        return;
+    }
+}

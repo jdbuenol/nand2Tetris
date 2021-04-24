@@ -1,0 +1,340 @@
+function Score.new 0
+push constant 2
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+pop this 0
+push argument 1
+pop this 1
+push pointer 0
+return
+function Score.drawNumber 0
+push argument 0
+pop pointer 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push constant 31
+add
+push this 1
+push constant 47
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push argument 1
+push constant 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 0
+push constant 3
+add
+push this 1
+push constant 2
+add
+push this 0
+push constant 28
+add
+push this 1
+push constant 45
+add
+call Screen.drawRectangle 4
+pop temp 0
+label IF_FALSE0
+push argument 1
+push constant 1
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push this 0
+push this 1
+push this 0
+push constant 9
+add
+push this 1
+push constant 47
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 0
+push constant 22
+add
+push this 1
+push this 0
+push constant 31
+add
+push this 1
+push constant 47
+add
+call Screen.drawRectangle 4
+pop temp 0
+label IF_FALSE1
+push argument 1
+push constant 2
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push this 0
+push this 1
+push constant 4
+add
+push this 0
+push constant 16
+add
+push this 1
+push constant 15
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 0
+push constant 12
+add
+push this 1
+push constant 26
+add
+push this 0
+push constant 31
+add
+push this 1
+push constant 38
+add
+call Screen.drawRectangle 4
+pop temp 0
+label IF_FALSE2
+push argument 1
+push constant 3
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push this 0
+push this 1
+push constant 6
+add
+push this 0
+push constant 19
+add
+push this 1
+push constant 19
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 0
+push this 1
+push constant 30
+add
+push this 0
+push constant 19
+add
+push this 1
+push constant 41
+add
+call Screen.drawRectangle 4
+pop temp 0
+label IF_FALSE3
+push argument 1
+push constant 4
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push this 0
+push constant 6
+add
+push this 1
+push this 0
+push constant 25
+add
+push this 1
+push constant 15
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 0
+push this 1
+push constant 22
+add
+push this 0
+push constant 25
+add
+push this 1
+push constant 47
+add
+call Screen.drawRectangle 4
+pop temp 0
+label IF_FALSE4
+push argument 1
+push constant 5
+eq
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push this 0
+push constant 7
+add
+push this 1
+push constant 5
+add
+push this 0
+push constant 31
+add
+push this 1
+push constant 17
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 0
+push this 1
+push constant 26
+add
+push this 0
+push constant 26
+add
+push this 1
+push constant 42
+add
+call Screen.drawRectangle 4
+pop temp 0
+label IF_FALSE5
+push argument 1
+push constant 6
+eq
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push this 0
+push constant 6
+add
+push this 1
+push constant 5
+add
+push this 0
+push constant 31
+add
+push this 1
+push constant 22
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 0
+push constant 4
+add
+push this 1
+push constant 29
+add
+push this 0
+push constant 27
+add
+push this 1
+push constant 43
+add
+call Screen.drawRectangle 4
+pop temp 0
+label IF_FALSE6
+push argument 1
+push constant 7
+eq
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push this 0
+push this 1
+push constant 9
+add
+push this 0
+push constant 20
+add
+push this 1
+push constant 47
+add
+call Screen.drawRectangle 4
+pop temp 0
+label IF_FALSE7
+push argument 1
+push constant 8
+eq
+if-goto IF_TRUE8
+goto IF_FALSE8
+label IF_TRUE8
+push this 0
+push constant 4
+add
+push this 1
+push constant 3
+add
+push this 0
+push constant 26
+add
+push this 1
+push constant 21
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 0
+push constant 4
+add
+push this 1
+push constant 27
+add
+push this 0
+push constant 26
+add
+push this 1
+push constant 44
+add
+call Screen.drawRectangle 4
+pop temp 0
+label IF_FALSE8
+push argument 1
+push constant 9
+eq
+if-goto IF_TRUE9
+goto IF_FALSE9
+label IF_TRUE9
+push this 0
+push constant 5
+add
+push this 1
+push constant 4
+add
+push this 0
+push constant 25
+add
+push this 1
+push constant 19
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 0
+push this 1
+push constant 26
+add
+push this 0
+push constant 25
+add
+push this 1
+push constant 47
+add
+call Screen.drawRectangle 4
+pop temp 0
+label IF_FALSE9
+push constant 0
+return
+function Score.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return

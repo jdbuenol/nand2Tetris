@@ -1,0 +1,60 @@
+class Score{
+
+    field int x, y;
+
+    constructor Score new(int Ax, int Ay){
+        let x = Ax;
+        let y = Ay;
+        return this;
+    }
+
+    method void drawNumber(int n){
+        do Screen.setColor(true);
+        do Screen.drawRectangle(x, y, x + 31, y + 47);
+        do Screen.setColor(false);
+        if(n = 0){
+            do Screen.drawRectangle(x + 3, y + 2, x + 28, y + 45);
+        }
+        if(n = 1){
+            do Screen.drawRectangle(x, y, x + 9, y + 47);
+            do Screen.drawRectangle(x + 22, y, x + 31, y + 47);
+        }
+        if(n = 2){
+            do Screen.drawRectangle(x, y + 4, x + 16, y + 15);
+            do Screen.drawRectangle(x + 12, y + 26, x + 31, y + 38);
+        }
+        if(n = 3){
+            do Screen.drawRectangle(x, y + 6, x + 19, y + 19);
+            do Screen.drawRectangle(x, y + 30, x + 19, y + 41);
+        }
+        if(n = 4){
+            do Screen.drawRectangle(x + 6, y, x + 25, y + 15);
+            do Screen.drawRectangle(x, y + 22, x + 25, y + 47);
+        }
+        if(n = 5){
+            do Screen.drawRectangle(x + 7, y + 5, x + 31, y + 17);
+            do Screen.drawRectangle(x, y + 26, x + 26, y + 42);
+        }
+        if(n = 6){
+            do Screen.drawRectangle(x + 6, y + 5, x + 31, y + 22);
+            do Screen.drawRectangle(x + 4, y + 29, x + 27, y + 43);
+        }
+        if(n = 7){
+            do Screen.drawRectangle(x, y + 9, x + 20, y + 47);
+        }
+        if(n = 8){
+            do Screen.drawRectangle(x + 4, y + 3, x + 26, y + 21);
+            do Screen.drawRectangle(x + 4, y + 27, x + 26, y + 44);
+        }
+        if(n = 9){
+            do Screen.drawRectangle(x + 5, y + 4, x + 25, y + 19);
+            do Screen.drawRectangle(x, y + 26, x + 25, y + 47);
+        }
+        return;
+    }
+
+    method void dispose(){
+        do Memory.deAlloc(this);
+        return;
+    }
+}

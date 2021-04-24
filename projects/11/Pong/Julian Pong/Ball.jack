@@ -1,0 +1,90 @@
+class Ball{
+
+    field int x, y;
+    field int velX, velY;
+    field int lastX, lastY; // Position X and position Y of the last iteration
+
+    constructor Ball new(int Ax, int Ay){
+        let x = Ax;
+        let y = Ay;
+        let lastX = x;
+        let lastY = y;
+        let velX = 1;
+        let velY = -2;
+        do show();
+        return this;
+    }
+
+    method void dispose() {
+        do Screen.setColor(false);
+        do Screen.drawRectangle(lastX, lastY, lastX + 4, lastY + 4);
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void show() {
+        do Screen.setColor(true);
+        do draw();
+        return;
+    }
+
+    method void setSpeed(int Vx, int Vy){
+        let velX = Vx;
+        let velY = Vy;
+        return;
+    }
+
+    method void setPosition(int Nx, int Ny){
+        let x = Nx;
+        let y = Ny;
+        return;
+    }
+
+    method void move() {
+        let lastX = x;
+        let lastY = y;
+	    let x = x + velX;
+        let y = y + velY;
+        if(y < 0){
+            let y = 0;
+            let velY = -velY;
+        }
+        if(y + 4 > 255) {
+            let y = 251;
+            let velY = -velY;
+        }
+        return;
+    }
+
+    method void draw(){
+        do Screen.setColor(false);
+        do Screen.drawRectangle(lastX, lastY, lastX + 4, lastY + 4);
+        do Screen.setColor(true);
+        do Screen.drawRectangle(x, y, x + 4, y + 4);
+        return;
+    }
+
+    method int getX(){
+        return x;
+    }
+
+    method int getY(){
+        return y;
+    }
+
+    method int getLastX(){
+        return lastX;
+    }
+
+    method int getLastY(){
+        return lastY;
+    }
+
+    method int getVelX(){
+        return velX;
+    }
+
+    method int getVelY(){
+        return velY;
+    }
+}

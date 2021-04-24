@@ -1,0 +1,185 @@
+class Game{
+
+    field Bat bat1;
+    field Bat bat2;
+    field Ball ball;
+    field Score score1, score2;
+    field int n1, n2;
+    field boolean exit;
+
+    constructor Game new(){
+        do Screen.clearScreen();
+        let bat1 = Bat.new(10, 5);
+        let bat2 = Bat.new(501, 5);
+        let ball = Ball.new(256, 128);
+        let score1 = Score.new(128, 64);
+        let score2 = Score.new(384, 64);
+        let n1 = 0;
+        let n2 = 0;
+        do score1.drawNumber(n1);
+        do score2.drawNumber(n2);
+        return this;
+    }
+
+    /** Deallocates the object's memory. */
+    method void dispose() {
+        do bat1.dispose();
+        do bat2.dispose();
+        do ball.dispose();
+        do score1.dispose();
+        do score2.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    /** Starts the game, and andles inputs from the user that control
+     *  the bat's movement direction. */
+    method void run() {
+        var char key;
+        var char old_key;
+        let old_key = Keyboard.keyPressed();
+        do drawLine();
+        while (~exit) {
+            // waits for a key to be pressed.
+            while ((key = old_key) & (~exit)) {
+                let key = Keyboard.keyPressed();
+                do bat1.move();
+                do bat2.move();
+                do ball.move();
+                do checkBall();
+                do ball.draw();
+                do Sys.wait(25);
+            }
+            let old_key = key;
+            if (key = 131) { do bat1.setDirection(1); }
+	        else {
+	            if (key = 133) { do bat1.setDirection(2); }
+		        else {
+                    if (key = 87) { do bat2.setDirection(1); }
+                    else {
+                        if (key = 83) { do bat2.setDirection(2); }
+                        else {
+                            if (key = 140) { let exit = true; }
+                        }
+                    }
+		        }
+            }
+        }
+
+	    if (exit) {
+            do Screen.clearScreen();
+            do Output.moveCursor(10,27);
+            if(n1 = n2){
+	            do Output.printString("Draw");
+            }
+            if(n1 > n2){
+                do Output.printString("Player1 Wins");
+            }
+            if(n2 > n1){
+                do Output.printString("Player2 Wins");
+            }
+	    }
+            
+        return;
+    }
+
+    method void checkBall(){
+        if((ball.getX() < ball.getLastX()) & (ball.getLastX() > 12) & (ball.getX() < 13)){
+            if((ball.getY() > (bat1.getTop() - 1)) & (ball.getY() < (bat1.getTop() + 7))){
+                do ball.setSpeed(1, -2);
+                do ball.setPosition(13, ball.getY());
+            }
+            else{
+                if((ball.getY() > (bat1.getTop() + 6)) & (ball.getY() < (bat1.getTop() + 14))){
+                    do ball.setSpeed(2, -1);
+                    do ball.setPosition(13, ball.getY());
+                }
+                else{
+                    if((ball.getY() > (bat1.getTop() + 13)) & (ball.getY() < (bat1.getTop() + 21))){
+                        do ball.setSpeed(3, 0);
+                        do ball.setPosition(13, ball.getY());
+                    }
+                    else{
+                        if((ball.getY() > (bat1.getTop() + 20)) & (ball.getY() < (bat1.getTop() + 28))){
+                            do ball.setSpeed(2, 1);
+                            do ball.setPosition(13, ball.getY());
+                        }
+                        else{
+                            if((ball.getY() > (bat1.getTop() + 27)) & (ball.getY() < (bat1.getTop() + 35))){
+                                do ball.setSpeed(1, 2);
+                                do ball.setPosition(13, ball.getY());
+                            }
+                            else{
+                                let n2 = n2 + 1;
+                                do score2.drawNumber(n2);
+                                if(n2 > 9){
+                                    let exit = true;
+                                }
+                                do ball.dispose();
+                                let ball = Ball.new(256, 128);
+                            }
+                        }
+                    }
+                }
+            }
+            do drawLine();
+            do score1.drawNumber(n1);
+            do score2.drawNumber(n2);
+        }
+        if((ball.getX() > ball.getLastX()) & (ball.getLastX() < 502) & (ball.getX() > 501)){
+            if((ball.getY() > (bat2.getTop() - 1)) & (ball.getY() < (bat2.getTop() + 7))){
+                do ball.setSpeed(-1, -2);
+                do ball.setPosition(501, ball.getY());
+            }
+            else{
+                if((ball.getY() > (bat2.getTop() + 6)) & (ball.getY() < (bat2.getTop() + 14))){
+                    do ball.setSpeed(-2, -1);
+                    do ball.setPosition(501, ball.getY());
+                }
+                else{
+                    if((ball.getY() > (bat2.getTop() + 13)) & (ball.getY() < (bat2.getTop() + 21))){
+                        do ball.setSpeed(-3, 0);
+                        do ball.setPosition(501, ball.getY());
+                    }
+                    else{
+                        if((ball.getY() > (bat2.getTop() + 20)) & (ball.getY() < (bat2.getTop() + 28))){
+                            do ball.setSpeed(-2, 1);
+                            do ball.setPosition(501, ball.getY());
+                        }
+                        else{
+                            if((ball.getY() > (bat2.getTop() + 27)) & (ball.getY() < (bat2.getTop() + 35))){
+                                do ball.setSpeed(-1, 2);
+                                do ball.setPosition(501, ball.getY());
+                            }
+                            else{
+                                let n1 = n1 + 1;
+                                do score1.drawNumber(n1);
+                                if(n1 > 9){
+                                    let exit = true;
+                                }
+                                do ball.dispose();
+                                let ball = Ball.new(256, 128);
+                            }
+                        }
+                    }
+                }
+            }
+            do drawLine();
+            do score1.drawNumber(n1);
+            do score2.drawNumber(n2);
+        }
+        return;
+    }
+
+    method void drawLine(){
+        var int line;
+        let line = 25;
+
+        do Screen.setColor(true);
+        while(line > 0){
+            do Screen.drawRectangle(256, line * 10, 258, (line * 10) + 5);
+            let line = line - 1;
+        }
+        return;
+    }
+}
